@@ -1,9 +1,12 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
+using tp_winform_equipo_y_recuperatorio.BusinessLogic;
 
 namespace tp_winform_equipo_y_recuperatorio
 {
     public partial class CatalogoForm : Form
     {
+        private readonly ArticuloBusinessLogic logicaArticulos = new ArticuloBusinessLogic();
         private ToolStrip toolStrip1;
         private ToolStripButton toolStripButton2;
         private ToolStripButton toolStripButton3;
@@ -18,8 +21,25 @@ namespace tp_winform_equipo_y_recuperatorio
         public CatalogoForm()
         {
             InitializeComponent();
+            Load += CatalogoForm_Load;
         }
 
+        private void CatalogoForm_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                dataGridView1.DataSource = logicaArticulos.ListarDesdeBaseDeDatos();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "No se pudo cargar el catálogo. Verificá que SQL Server esté iniciado y que exista la base CATALOGO_P3_DB." +
+                    Environment.NewLine + Environment.NewLine + "Detalle: " + ex.Message,
+                    "Error al cargar el catálogo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CatalogoForm));
@@ -36,9 +56,6 @@ namespace tp_winform_equipo_y_recuperatorio
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // toolStrip1
-            // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
             this.toolStripButton2,
@@ -49,45 +66,30 @@ namespace tp_winform_equipo_y_recuperatorio
             this.toolStrip1.Size = new System.Drawing.Size(1011, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripButton1
-            // 
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(46, 22);
             this.toolStripButton1.Text = "Nuevo";
-            // 
-            // toolStripButton2
-            // 
             this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(41, 22);
             this.toolStripButton2.Text = "Editar";
-            // 
-            // toolStripButton3
-            // 
             this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
             this.toolStripButton3.Size = new System.Drawing.Size(54, 22);
             this.toolStripButton3.Text = "Eliminar";
-            // 
-            // toolStripButton4
-            // 
             this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
             this.toolStripButton4.Size = new System.Drawing.Size(46, 22);
             this.toolStripButton4.Text = "Buscar";
-            // 
-            // dataGridView1
-            // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -102,34 +104,22 @@ namespace tp_winform_equipo_y_recuperatorio
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(980, 470);
             this.dataGridView1.TabIndex = 1;
-            // 
-            // textBox1
-            // 
             this.textBox1.Location = new System.Drawing.Point(230, 38);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(450, 20);
             this.textBox1.TabIndex = 2;
-            // 
-            // comboBox1
-            // 
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(85, 38);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 3;
-            // 
-            // label1
-            // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 42);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(61, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "Buscar por:";
-            // 
-            // label2
-            // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 550);
@@ -137,9 +127,6 @@ namespace tp_winform_equipo_y_recuperatorio
             this.label2.Size = new System.Drawing.Size(110, 13);
             this.label2.TabIndex = 5;
             this.label2.Text = "Artículos del catálogo";
-            // 
-            // CatalogoForm
-            // 
             this.ClientSize = new System.Drawing.Size(1011, 573);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
