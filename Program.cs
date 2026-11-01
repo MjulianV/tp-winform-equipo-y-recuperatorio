@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Windows.Forms;
 
 namespace tp_winform_equipo_y_recuperatorio
@@ -8,6 +9,7 @@ namespace tp_winform_equipo_y_recuperatorio
         [STAThread]
         private static void Main()
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new CatalogoForm());

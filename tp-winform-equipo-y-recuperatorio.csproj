@@ -49,10 +49,22 @@
     <Compile Include="DAO\ArticuloDAO.cs" />
     <Compile Include="BusinessLogic\ArticuloBusinessLogic.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="CatalogoForm.Designer.cs">
+      <DependentUpon>CatalogoForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CatalogoForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ArticuloForm.Designer.cs">
+      <DependentUpon>ArticuloForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ArticuloForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdministrarValoresForm.Designer.cs">
+      <DependentUpon>AdministrarValoresForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdministrarValoresForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,6 +73,11 @@
     <None Include="App.config" />
     <None Include="BaseDatos\CATALOGO_P3_DB.sql" />
     <None Include=".gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Imagenes\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ArticuloForm.resx">

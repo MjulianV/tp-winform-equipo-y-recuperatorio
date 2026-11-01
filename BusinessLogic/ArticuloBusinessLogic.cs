@@ -11,7 +11,9 @@ namespace tp_winform_equipo_y_recuperatorio.BusinessLogic
         public DataTable ListarDesdeBaseDeDatos() { return accesoDatos.Listar(); }
         public DataTable ListarMarcas() { return accesoDatos.ListarMarcas(); }
         public DataTable ListarCategorias() { return accesoDatos.ListarCategorias(); }
-        public void Guardar(Articulo articulo)
+        public void GuardarMarca(string descripcion) { accesoDatos.GuardarMarca(descripcion); }
+        public void GuardarCategoria(string descripcion) { accesoDatos.GuardarCategoria(descripcion); }
+        public void Guardar(Articulo articulo, bool actualizarImagen, string imagenUrl)
         {
             if (articulo == null) throw new ArgumentNullException(nameof(articulo));
             articulo.Codigo = (articulo.Codigo ?? "").Trim();
@@ -26,7 +28,9 @@ namespace tp_winform_equipo_y_recuperatorio.BusinessLogic
                 throw new ArgumentException("Seleccioná una marca y una categoría.");
             if (articulo.Precio <= 0 || articulo.Precio > 922337203685477.5807m)
                 throw new ArgumentException("Ingresá un precio mayor que cero y dentro del rango permitido.");
-            accesoDatos.Guardar(articulo);
+            if (actualizarImagen && imagenUrl != null && imagenUrl.Length > 1000)
+                throw new ArgumentException("La ruta de la imagen es demasiado larga.");
+            accesoDatos.Guardar(articulo, actualizarImagen, imagenUrl);
         }
         public void Eliminar(int id)
         {
